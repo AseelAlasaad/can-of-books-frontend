@@ -1,8 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
+import LoginButton from './LoginButton';
 import './Login.css';
-
+import { withAuth0 } from '@auth0/auth0-react';
 class Login extends React.Component {
   render() {
     return(
@@ -13,10 +14,13 @@ class Login extends React.Component {
             Click Below to Log In
           </Card.Text>
           {/* TODO: add a `LoginButton` component here that will log the user in with Auth0 */}
+
+          
+           <LoginButton/>
         </Card.Body>
       </Card>
     )
   }
 }
 
-export default Login;
+export default withAuth0(Login);
