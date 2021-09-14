@@ -1,41 +1,37 @@
 import React from 'react';
 
-import Carousel from 'react-bootstrap/Carousel';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './BookItem.css';
-class BookItem extends React.Component{
-    render(){
-      
-        return(
-         <div>
-         
-        <Carousel>
-              {this.props.Book.map((item,key)=>
-              
-                <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src={item.imgUrl}
-                  alt="First slide"
-               
-                  width='600'
-                   height= '500'
-                />
-                <Carousel.Caption>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <p>{item.email}</p>
-                  <p>{item.status}</p>
-                </Carousel.Caption>
-               
-              </Carousel.Item>
-            
+class BookItem extends React.Component {
+  render() {
 
-              )}
-        
-         </Carousel>
-         </div>
-        )
-    }
+    return (
+      <div>
+        <Row xs={1} md={3} className="g-4">
+        {this.props.Book.map(item=>
+            <Col>
+             <Card style={{ width: '18rem' }}>
+             <Card.Body>
+               <Card.Title> {item.title}</Card.Title>
+               <Card.Text>
+               {item.description}
+               {item.email}
+               
+               {item.status}
+               </Card.Text>
+              
+             </Card.Body>
+             <Button variant="primary" onClick={()=>this.props.deleteBook(item._id)}> Delete</Button>
+           </Card>
+           </Col>
+          )}</Row>
+     
+      </div>
+    )
+  }
 }
 export default BookItem;
