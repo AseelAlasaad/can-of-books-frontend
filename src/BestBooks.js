@@ -76,7 +76,7 @@ class BestBooks extends React.Component {
     const { user } = this.props.auth0;
     const email = user.email;
     axios
-    .delete(`https://addnewbooks.herokuapp.com/${id}?email=${email}`)
+    .delete(`https://addnewbooks.herokuapp.com/deleteBook/${id}?email=${email}`)
       .then(result => {
         this.setState({
         Books: result.data
