@@ -7,6 +7,7 @@ import axios from 'axios';
 import BookItem from './BookItem';
 import Modelbook from './Modelbook';
 import Button from '@restart/ui/esm/Button';
+import UpdateBook from './UpdateBook';
 
 //https://addnewbooks.herokuapp.com/
 
@@ -15,7 +16,12 @@ class BestBooks extends React.Component {
     super(props)
     this.state = {
       Books: [],
-      showModel:false
+      showModel:false,
+      title:'',
+      idBook:'',
+      description:'',
+      status:'',
+      showForm:false
 
     }
   }
@@ -87,6 +93,43 @@ class BestBooks extends React.Component {
   }
 
 
+  
+
+  handelupdateForm=(item)=>{
+    this.setState({
+      showForm:true,
+      title:item.title,
+      description:item.description,
+      status:item.status,
+      idBook:item._id
+    })
+  }
+
+  //function UpdateBook
+  updateBook=(event)=>{
+    event.preventDefault();
+    const { user } = this.props.auth0;
+    const email = user.email;
+    const obj1 = {
+      title: event.target.title.value,
+      description: event.target.description.value,
+      email:email,
+      status: event.target.status.value
+      
+    }
+    console.log("fail");
+    axios.put(`https://addnewbooks.herokuapp.com/updateBook/${this.state.idBook}`, obj1)
+    .then(result=>{
+      this.setState({
+        Books:result.data,
+        showForm:false
+      })
+    }).catch(error=>{
+      console.log('Error on Update Book');
+    })
+  }
+ 
+
   render() {
     return (
       <>
@@ -98,14 +141,32 @@ class BestBooks extends React.Component {
      
         <BookItem 
        Book={this.state.Books}
+      
        deleteBook={this.deleteBook}
+       handelupdateForm={this.handelupdateForm}
+      
        />
+       
 
        <Modelbook show={this.state.showModel}
        handelShowModel={this.handelShowModel}
        addBook={this.addBook}
        close={this.close}/>
+
+
+<UpdateBook 
+        show={this.state.showForm}
+       
+        close={this.close}
+        title={this.state.title}
+        description={this.state.description}
+        status={this.state.status}
+        updateBook={this.updateBook}
+        
+        />
       </>
+
+     
     )
   }
 }
