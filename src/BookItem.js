@@ -26,6 +26,8 @@ class BookItem extends React.Component {
               
              </Card.Body>
              <Button variant="primary" onClick={()=>this.props.deleteBook(item._id)}> Delete</Button>
+             
+             <Button variant="primary" onClick={()=>this.props.handelupdateForm(item)}> Update</Button>
            </Card>
            </Col>
           )}</Row>
